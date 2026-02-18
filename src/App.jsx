@@ -581,8 +581,660 @@ function WeekDetail({ week, progress, onBack, onUpdateProgress }) {
   );
 }
 
+/* ───────────── Teaching Methods Data ───────────── */
+const teachingMethods = [
+  {
+    title: 'Systematic Phonics',
+    emoji: '🔤',
+    color: colors.coral,
+    description:
+      'Teach letter-sound relationships in a planned, sequential order. Start with the most common sounds and progress to less common ones.',
+    steps: [
+      'Introduce one new sound per session — say the sound, show the letter, give a keyword (e.g., "a — apple — /a/")',
+      'Have your child trace the letter while saying the sound aloud',
+      'Practice blending: model how to push sounds together ("c-a-t → cat")',
+      'Use decodable words that only contain sounds already taught',
+    ],
+    tip: 'Keep phonics lessons to 10–15 minutes. Short, daily practice beats long, infrequent sessions.',
+  },
+  {
+    title: 'Multi-Sensory Learning',
+    emoji: '🖐️',
+    color: colors.sky,
+    description:
+      'Engage sight, sound, and touch simultaneously. Children learn letter patterns more deeply when multiple senses are involved.',
+    steps: [
+      'Sky-writing: trace letters in the air with a pointed finger while saying the sound',
+      'Sand or salt tray: write letters in a shallow tray of sand while saying the word',
+      'Letter tiles or magnets: physically build words by snapping sounds together',
+      'Playdough letters: roll and shape letters, then blend them into words',
+    ],
+    tip: 'Let your child choose which sensory activity they prefer — ownership increases engagement.',
+  },
+  {
+    title: 'Guided Oral Reading',
+    emoji: '📖',
+    color: colors.mint,
+    description:
+      'Read aloud together with your child. You provide a model of fluent reading; they practice with your support right beside them.',
+    steps: [
+      'Echo reading: you read a sentence, then your child reads the same sentence back',
+      'Choral reading: read the sentence together at the same time',
+      'Partner reading: take turns — you read one sentence, they read the next',
+      'Gradually release: as confidence grows, let your child read more independently',
+    ],
+    tip: 'When your child gets stuck on a word, wait 3–5 seconds before helping. Let them try their decoding skills first.',
+  },
+  {
+    title: 'Word Families & Patterns',
+    emoji: '🏠',
+    color: colors.lilac,
+    description:
+      'Group words that share the same ending pattern (rime). Once a child can read "cat," they can quickly decode bat, hat, mat, sat, and rat.',
+    steps: [
+      'Start with a known word (e.g., "cat") and write it on a card',
+      'Change only the first letter to make new words: bat, hat, mat, sat',
+      'Have your child read the whole family, noticing what stays the same',
+      'Mix word families together and have your child sort them back into groups',
+    ],
+    tip: 'The 37 most common word families (like -at, -in, -op) can generate over 500 words your child can read.',
+  },
+  {
+    title: 'Sight Word Practice',
+    emoji: '👀',
+    color: colors.coralDark,
+    description:
+      'Some high-frequency words don\'t follow regular phonics rules (e.g., "the," "was," "said"). These need to be memorized by sight through repeated exposure.',
+    steps: [
+      'Introduce 2–3 new sight words per week — no more',
+      'Use flashcards: show the word, say it, use it in a sentence',
+      'Word hunt: find the sight word in books, signs, or labels around the house',
+      'Write it, build it: write the word in a sentence, then build it with letter tiles',
+    ],
+    tip: 'The Dolch or Fry word lists cover the most common sight words. Start with the pre-primer list.',
+  },
+  {
+    title: 'Comprehension Conversations',
+    emoji: '💬',
+    color: colors.skyDark,
+    description:
+      'Reading isn\'t just decoding — it\'s understanding. Even at the earliest stages, talk about what your child reads to build meaning-making habits.',
+    steps: [
+      'Before reading: look at the title or picture and predict what will happen',
+      'During reading: pause and ask "What just happened?" or "What do you think comes next?"',
+      'After reading: ask your child to retell the story in their own words',
+      'Connect to life: "Has something like this ever happened to you?"',
+    ],
+    tip: 'Avoid yes/no questions. Open-ended questions build deeper thinking skills.',
+  },
+];
+
+const dailyRoutine = [
+  { time: '5 min', activity: 'Phonics warm-up', detail: 'Review yesterday\'s sounds, introduce today\'s new sound', color: colors.coral },
+  { time: '5 min', activity: 'Word practice', detail: 'Read through this week\'s word list (tap words in the Curriculum tab)', color: colors.sky },
+  { time: '5 min', activity: 'Sentence reading', detail: 'Read the practice sentences together using guided oral reading', color: colors.mint },
+  { time: '5 min', activity: 'Hands-on activity', detail: 'Do the weekly activity or a multi-sensory exercise', color: colors.lilac },
+  { time: '10 min', activity: 'Free reading', detail: 'Read a favorite book together — let your child choose', color: colors.coral },
+];
+
+/* ───────────── Resources Data ───────────── */
+const resources = {
+  decodableBooks: [
+    {
+      title: 'Bob Books Set 1: Beginning Readers',
+      description: 'Simple CVC words with just a few sounds per book. Perfect companion for Weeks 1–4.',
+      level: 'Beginner',
+    },
+    {
+      title: 'Primary Phonics by Barbara Makar',
+      description: 'Progressive storybooks aligned to phonics scope and sequence. Great for Weeks 1–8.',
+      level: 'Beginner',
+    },
+    {
+      title: 'Flyleaf Publishing Decodable Books',
+      description: 'Engaging stories that stay strictly decodable. Good for Weeks 3–10.',
+      level: 'Intermediate',
+    },
+    {
+      title: 'High Noon Decodable Chapter Books',
+      description: 'Longer chapter-style decodable books for kids ready to read more. Weeks 8–12.',
+      level: 'Advanced',
+    },
+  ],
+  readAloudBooks: [
+    {
+      title: 'The Read-Aloud Handbook by Jim Trelease',
+      description: 'The essential guide to why reading aloud matters and how to do it well.',
+    },
+    {
+      title: 'Chicka Chicka Boom Boom by Bill Martin Jr.',
+      description: 'A rhythmic alphabet book that makes letter learning feel like a party.',
+    },
+    {
+      title: 'Green Eggs and Ham by Dr. Seuss',
+      description: 'Only 50 unique words — repetition builds sight word recognition naturally.',
+    },
+    {
+      title: 'Frog and Toad Are Friends by Arnold Lobel',
+      description: 'Simple, warm stories perfect for early readers transitioning to chapter books.',
+    },
+    {
+      title: 'Owl at Home by Arnold Lobel',
+      description: 'Five gentle chapters with predictable vocabulary — great for building stamina.',
+    },
+  ],
+  printableActivities: [
+    {
+      title: 'Letter Sound Cards',
+      description: 'Print one card per sound. Front: letter. Back: keyword picture and sound. Use for daily drill.',
+      forWeeks: 'Weeks 1–4',
+    },
+    {
+      title: 'Word Family Wheels',
+      description: 'A spinner wheel with the rime in the center and onsets around the edge. Spin and read.',
+      forWeeks: 'Weeks 1–6',
+    },
+    {
+      title: 'Blend & Digraph Chart',
+      description: 'A reference poster with all consonant blends and digraphs. Hang it at reading level.',
+      forWeeks: 'Weeks 5–6',
+    },
+    {
+      title: 'Magic-e Flip Cards',
+      description: 'CVC word cards with a folding "e" flap. Flip it up to see the word transform (e.g., "cap" → "cape").',
+      forWeeks: 'Week 7',
+    },
+    {
+      title: 'Vowel Team Sorting Mats',
+      description: 'Print a mat for each vowel team. Sort word cards onto the correct mat.',
+      forWeeks: 'Weeks 8–9',
+    },
+    {
+      title: 'Syllable Clap Cards',
+      description: 'Multi-syllable word cards. Clap each syllable, then draw lines to divide the word.',
+      forWeeks: 'Week 12',
+    },
+  ],
+  assessmentTips: [
+    {
+      title: 'Weekly Word Check',
+      description: 'At the end of each week, show the word list in random order. Note which words are read fluently vs. slowly decoded vs. missed. Re-teach missed words next week.',
+    },
+    {
+      title: 'Running Record',
+      description: 'As your child reads a passage, mark each word: ✓ for correct, record substitutions, note self-corrections. Aim for 95%+ accuracy before moving on.',
+    },
+    {
+      title: 'Fluency Timing',
+      description: 'Starting around Week 6, time your child reading a passage for one minute. Count correct words per minute (CWPM). Track growth over time — progress matters more than the number.',
+    },
+    {
+      title: 'Comprehension Retell',
+      description: 'After reading, ask your child to retell what happened. Look for: characters, setting, problem, events, and solution. A strong retell means real understanding.',
+    },
+  ],
+  parentTips: [
+    'Read to your child every day — even after they can read on their own. This builds vocabulary and a love of stories.',
+    'Never force reading when your child is frustrated. Take a break, do something fun, and come back later.',
+    'Celebrate effort, not just accuracy. "You worked so hard sounding that out!" beats "You got it right!"',
+    'Let your child see you reading. Kids model what they see at home.',
+    'Re-reading favorite books is valuable — repetition builds fluency and confidence.',
+    'If your child is struggling with a concept for more than a week, slow down. There is no race.',
+    'Make reading part of daily life: read menus, street signs, grocery lists, and recipe steps together.',
+  ],
+};
+
+/* ───────────── Tab Components ───────────── */
+
+function TabBar({ activeTab, onTabChange }) {
+  const tabs = [
+    { id: 'curriculum', label: 'Curriculum', emoji: '📚' },
+    { id: 'methods', label: 'Methods', emoji: '🎓' },
+    { id: 'resources', label: 'Resources', emoji: '📦' },
+  ];
+
+  return (
+    <nav
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        background: colors.white,
+        borderTop: `1px solid ${colors.gray300}`,
+        display: 'flex',
+        justifyContent: 'space-around',
+        padding: '6px 0 env(safe-area-inset-bottom, 8px)',
+        zIndex: 20,
+        boxShadow: '0 -2px 8px rgba(0,0,0,0.06)',
+      }}
+    >
+      {tabs.map((tab) => {
+        const isActive = activeTab === tab.id;
+        return (
+          <button
+            key={tab.id}
+            onClick={() => onTabChange(tab.id)}
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 2,
+              padding: '8px 4px',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              color: isActive ? colors.coral : colors.gray600,
+              fontFamily: font.sans,
+              fontSize: '0.7rem',
+              fontWeight: isActive ? 700 : 500,
+              transition: 'color 0.2s',
+            }}
+          >
+            <span style={{ fontSize: '1.3rem' }}>{tab.emoji}</span>
+            {tab.label}
+          </button>
+        );
+      })}
+    </nav>
+  );
+}
+
+function MethodCard({ method }) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div
+      style={{
+        background: colors.white,
+        border: `1px solid ${colors.gray300}`,
+        borderRadius: 14,
+        overflow: 'hidden',
+        boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+      }}
+    >
+      <button
+        onClick={() => setExpanded(!expanded)}
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+          padding: '16px',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          textAlign: 'left',
+          fontFamily: font.sans,
+        }}
+      >
+        <div
+          style={{
+            width: 44,
+            height: 44,
+            borderRadius: 12,
+            background: `${method.color}20`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '1.4rem',
+            flexShrink: 0,
+          }}
+        >
+          {method.emoji}
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontWeight: 600, fontSize: '1rem', color: colors.warm }}>
+            {method.title}
+          </div>
+          <div style={{ fontSize: '0.82rem', color: colors.gray600, marginTop: 2 }}>
+            {method.description.slice(0, 80)}...
+          </div>
+        </div>
+        <div
+          style={{
+            color: colors.gray600,
+            fontSize: '1.2rem',
+            flexShrink: 0,
+            transform: expanded ? 'rotate(90deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s',
+          }}
+        >
+          ›
+        </div>
+      </button>
+
+      {expanded && (
+        <div style={{ padding: '0 16px 16px', borderTop: `1px solid ${colors.gray100}` }}>
+          <p
+            style={{
+              fontFamily: font.serif,
+              fontSize: '0.95rem',
+              lineHeight: 1.6,
+              color: colors.warm,
+              margin: '14px 0',
+            }}
+          >
+            {method.description}
+          </p>
+
+          <div
+            style={{
+              fontFamily: font.sans,
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              letterSpacing: '0.06em',
+              color: colors.warmLight,
+              marginBottom: 8,
+            }}
+          >
+            How To Do It
+          </div>
+          <ol style={{ margin: 0, paddingLeft: 20 }}>
+            {method.steps.map((step, i) => (
+              <li
+                key={i}
+                style={{
+                  fontFamily: font.serif,
+                  fontSize: '0.92rem',
+                  lineHeight: 1.6,
+                  color: colors.warm,
+                  marginBottom: 8,
+                }}
+              >
+                {step}
+              </li>
+            ))}
+          </ol>
+
+          <div
+            style={{
+              marginTop: 12,
+              padding: '12px 14px',
+              background: `${method.color}12`,
+              borderRadius: 10,
+              borderLeft: `3px solid ${method.color}`,
+              fontFamily: font.sans,
+              fontSize: '0.85rem',
+              lineHeight: 1.5,
+              color: colors.warm,
+            }}
+          >
+            <strong>Tip:</strong> {method.tip}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TeachingMethodsTab() {
+  return (
+    <div style={{ paddingBottom: 40 }}>
+      <h2
+        style={{
+          fontFamily: font.serif,
+          fontSize: '1.4rem',
+          fontWeight: 700,
+          color: colors.warm,
+          margin: '0 0 6px',
+        }}
+      >
+        Teaching Methods
+      </h2>
+      <p style={{ fontFamily: font.sans, fontSize: '0.88rem', color: colors.gray600, marginBottom: 24 }}>
+        Research-backed approaches to help your child learn to read
+      </p>
+
+      {/* Methods list */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 32 }}>
+        {teachingMethods.map((m) => (
+          <MethodCard key={m.title} method={m} />
+        ))}
+      </div>
+
+      {/* Daily routine */}
+      <Section title="Suggested Daily Routine" emoji="🕐">
+        <p style={{ fontFamily: font.sans, fontSize: '0.85rem', color: colors.gray600, marginBottom: 14 }}>
+          A simple 30-minute daily reading block
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {dailyRoutine.map((item, i) => (
+            <div
+              key={i}
+              style={{
+                display: 'flex',
+                gap: 12,
+                alignItems: 'flex-start',
+                background: colors.white,
+                border: `1px solid ${colors.gray300}`,
+                borderRadius: 12,
+                padding: '14px',
+              }}
+            >
+              <div
+                style={{
+                  background: `${item.color}20`,
+                  color: item.color,
+                  fontFamily: font.sans,
+                  fontWeight: 700,
+                  fontSize: '0.75rem',
+                  padding: '4px 10px',
+                  borderRadius: 8,
+                  flexShrink: 0,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {item.time}
+              </div>
+              <div>
+                <div style={{ fontFamily: font.sans, fontWeight: 600, fontSize: '0.92rem', color: colors.warm }}>
+                  {item.activity}
+                </div>
+                <div style={{ fontFamily: font.sans, fontSize: '0.82rem', color: colors.gray600, marginTop: 2 }}>
+                  {item.detail}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+    </div>
+  );
+}
+
+function ResourcesTab() {
+  return (
+    <div style={{ paddingBottom: 40 }}>
+      <h2
+        style={{
+          fontFamily: font.serif,
+          fontSize: '1.4rem',
+          fontWeight: 700,
+          color: colors.warm,
+          margin: '0 0 6px',
+        }}
+      >
+        Resources
+      </h2>
+      <p style={{ fontFamily: font.sans, fontSize: '0.88rem', color: colors.gray600, marginBottom: 24 }}>
+        Books, activities, and tips to support your reading journey
+      </p>
+
+      {/* Decodable Books */}
+      <Section title="Decodable Book Series" emoji="📕">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {resources.decodableBooks.map((book) => (
+            <div
+              key={book.title}
+              style={{
+                background: colors.white,
+                border: `1px solid ${colors.gray300}`,
+                borderRadius: 12,
+                padding: '14px 16px',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
+                <div style={{ fontFamily: font.sans, fontWeight: 600, fontSize: '0.95rem', color: colors.warm }}>
+                  {book.title}
+                </div>
+                <span
+                  style={{
+                    fontFamily: font.sans,
+                    fontSize: '0.7rem',
+                    fontWeight: 600,
+                    padding: '2px 8px',
+                    borderRadius: 6,
+                    background:
+                      book.level === 'Beginner' ? `${colors.mint}30` :
+                      book.level === 'Intermediate' ? `${colors.sky}30` : `${colors.lilac}30`,
+                    color:
+                      book.level === 'Beginner' ? colors.mintDark :
+                      book.level === 'Intermediate' ? colors.skyDark : colors.lilacDark,
+                    flexShrink: 0,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {book.level}
+                </span>
+              </div>
+              <div style={{ fontFamily: font.sans, fontSize: '0.82rem', color: colors.gray600, marginTop: 4 }}>
+                {book.description}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Read-Aloud Favorites */}
+      <Section title="Read-Aloud Favorites" emoji="📗">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {resources.readAloudBooks.map((book) => (
+            <div
+              key={book.title}
+              style={{
+                background: colors.white,
+                border: `1px solid ${colors.gray300}`,
+                borderRadius: 12,
+                padding: '14px 16px',
+              }}
+            >
+              <div style={{ fontFamily: font.sans, fontWeight: 600, fontSize: '0.95rem', color: colors.warm }}>
+                {book.title}
+              </div>
+              <div style={{ fontFamily: font.sans, fontSize: '0.82rem', color: colors.gray600, marginTop: 4 }}>
+                {book.description}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Printable Activities */}
+      <Section title="Printable Activities" emoji="🖨️">
+        <p style={{ fontFamily: font.sans, fontSize: '0.82rem', color: colors.gray600, marginBottom: 12, fontStyle: 'italic' }}>
+          DIY activities you can make at home with index cards, paper, and markers
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {resources.printableActivities.map((item) => (
+            <div
+              key={item.title}
+              style={{
+                background: colors.white,
+                border: `1px solid ${colors.gray300}`,
+                borderRadius: 12,
+                padding: '14px 16px',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
+                <div style={{ fontFamily: font.sans, fontWeight: 600, fontSize: '0.95rem', color: colors.warm }}>
+                  {item.title}
+                </div>
+                <span
+                  style={{
+                    fontFamily: font.sans,
+                    fontSize: '0.7rem',
+                    fontWeight: 600,
+                    padding: '2px 8px',
+                    borderRadius: 6,
+                    background: `${colors.peach}`,
+                    color: colors.coralDark,
+                    flexShrink: 0,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {item.forWeeks}
+                </span>
+              </div>
+              <div style={{ fontFamily: font.sans, fontSize: '0.82rem', color: colors.gray600, marginTop: 4 }}>
+                {item.description}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Assessment Tips */}
+      <Section title="Tracking Progress" emoji="📊">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {resources.assessmentTips.map((tip) => (
+            <div
+              key={tip.title}
+              style={{
+                background: colors.white,
+                border: `1px solid ${colors.gray300}`,
+                borderRadius: 12,
+                padding: '14px 16px',
+              }}
+            >
+              <div style={{ fontFamily: font.sans, fontWeight: 600, fontSize: '0.95rem', color: colors.warm }}>
+                {tip.title}
+              </div>
+              <div style={{ fontFamily: font.sans, fontSize: '0.82rem', color: colors.gray600, marginTop: 4, lineHeight: 1.5 }}>
+                {tip.description}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Parent Tips */}
+      <Section title="Tips for Parents" emoji="💡">
+        <div
+          style={{
+            background: `linear-gradient(135deg, ${colors.peach} 0%, ${colors.cream} 100%)`,
+            border: `1px solid ${colors.peach}`,
+            borderRadius: 12,
+            padding: '16px',
+          }}
+        >
+          <ul style={{ margin: 0, paddingLeft: 18 }}>
+            {resources.parentTips.map((tip, i) => (
+              <li
+                key={i}
+                style={{
+                  fontFamily: font.serif,
+                  fontSize: '0.92rem',
+                  lineHeight: 1.6,
+                  color: colors.warm,
+                  marginBottom: i < resources.parentTips.length - 1 ? 10 : 0,
+                }}
+              >
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+    </div>
+  );
+}
+
 /* ───────────── Main App ───────────── */
 export default function App() {
+  const [activeTab, setActiveTab] = useState('curriculum');
   const [selectedWeek, setSelectedWeek] = useState(null);
   const [progress, setProgress] = useState(loadProgress);
 
@@ -600,101 +1252,103 @@ export default function App() {
 
   const week = selectedWeek ? curriculum.find((w) => w.week === selectedWeek) : null;
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setSelectedWeek(null);
+  };
+
   return (
     <div style={{ minHeight: '100vh', background: colors.cream }}>
-      <Header onHome={() => setSelectedWeek(null)} />
+      <Header onHome={() => { setActiveTab('curriculum'); setSelectedWeek(null); }} />
 
-      <main style={{ maxWidth: 600, margin: '0 auto', padding: '20px 16px' }}>
-        {!week ? (
+      <main style={{ maxWidth: 600, margin: '0 auto', padding: '20px 16px 80px' }}>
+        {activeTab === 'curriculum' && (
           <>
-            {/* Dashboard */}
-            <div
-              style={{
-                background: colors.white,
-                borderRadius: 14,
-                padding: '20px',
-                boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
-                marginBottom: 24,
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: font.sans,
-                  fontWeight: 600,
-                  fontSize: '0.85rem',
-                  color: colors.gray600,
-                  marginBottom: 8,
-                }}
-              >
-                Overall Progress
-              </div>
-              <div
-                style={{
-                  fontFamily: font.serif,
-                  fontSize: '2rem',
-                  fontWeight: 700,
-                  color: colors.warm,
-                }}
-              >
-                {completedCount}{' '}
-                <span style={{ fontSize: '1rem', fontWeight: 400, color: colors.gray600 }}>
-                  / 12 weeks
-                </span>
-              </div>
-              <div
-                style={{
-                  height: 8,
-                  borderRadius: 4,
-                  background: colors.gray300,
-                  overflow: 'hidden',
-                  marginTop: 12,
-                }}
-              >
+            {!week ? (
+              <>
+                {/* Dashboard */}
                 <div
                   style={{
-                    height: '100%',
-                    width: `${Math.round((completedCount / 12) * 100)}%`,
-                    borderRadius: 4,
-                    background: `linear-gradient(90deg, ${colors.coral}, ${colors.lilac})`,
-                    transition: 'width 0.4s ease',
+                    background: colors.white,
+                    borderRadius: 14,
+                    padding: '20px',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                    marginBottom: 24,
                   }}
-                />
-              </div>
-            </div>
+                >
+                  <div
+                    style={{
+                      fontFamily: font.sans,
+                      fontWeight: 600,
+                      fontSize: '0.85rem',
+                      color: colors.gray600,
+                      marginBottom: 8,
+                    }}
+                  >
+                    Overall Progress
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: font.serif,
+                      fontSize: '2rem',
+                      fontWeight: 700,
+                      color: colors.warm,
+                    }}
+                  >
+                    {completedCount}{' '}
+                    <span style={{ fontSize: '1rem', fontWeight: 400, color: colors.gray600 }}>
+                      / 12 weeks
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      height: 8,
+                      borderRadius: 4,
+                      background: colors.gray300,
+                      overflow: 'hidden',
+                      marginTop: 12,
+                    }}
+                  >
+                    <div
+                      style={{
+                        height: '100%',
+                        width: `${Math.round((completedCount / 12) * 100)}%`,
+                        borderRadius: 4,
+                        background: `linear-gradient(90deg, ${colors.coral}, ${colors.lilac})`,
+                        transition: 'width 0.4s ease',
+                      }}
+                    />
+                  </div>
+                </div>
 
-            {/* Week list */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {curriculum.map((w) => (
-                <WeekCard
-                  key={w.week}
-                  week={w}
-                  isComplete={progress[`week_${w.week}`]?.complete || false}
-                  onSelect={setSelectedWeek}
-                />
-              ))}
-            </div>
+                {/* Week list */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  {curriculum.map((w) => (
+                    <WeekCard
+                      key={w.week}
+                      week={w}
+                      isComplete={progress[`week_${w.week}`]?.complete || false}
+                      onSelect={setSelectedWeek}
+                    />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <WeekDetail
+                week={week}
+                progress={progress}
+                onBack={() => setSelectedWeek(null)}
+                onUpdateProgress={updateProgress}
+              />
+            )}
           </>
-        ) : (
-          <WeekDetail
-            week={week}
-            progress={progress}
-            onBack={() => setSelectedWeek(null)}
-            onUpdateProgress={updateProgress}
-          />
         )}
+
+        {activeTab === 'methods' && <TeachingMethodsTab />}
+        {activeTab === 'resources' && <ResourcesTab />}
       </main>
 
-      <footer
-        style={{
-          textAlign: 'center',
-          padding: '24px 16px',
-          fontFamily: font.sans,
-          fontSize: '0.75rem',
-          color: colors.gray600,
-        }}
-      >
-        Made with ♥ for homeschool families
-      </footer>
+      <TabBar activeTab={activeTab} onTabChange={handleTabChange} />
     </div>
   );
 }
